@@ -1,11 +1,11 @@
 @font-face {
-    font-family: 'VogueModerne';
-    src: url('../../fonts/VogueModerne.otf') format('opentype');
+    font-family: 'voguemoderne';
+    src: url('../../fonts/voguemoderne.otf') format('opentype');
 }
 
 @font-face {
-    font-family: 'UTDefghio';
-    src: url('../../fonts/UT Defghio Nixav Trial.otf') format('opentype');
+    font-family: 'utdefghio';
+    src: url('../../fonts/ut defghio nixav trial.otf') format('opentype');
 }
 
 body {
@@ -43,7 +43,7 @@ main {
 }
 
 .intro-text {
-    font-family: 'VogueModerne', sans-serif;
+    font-family: 'voguemoderne', sans-serif;
     max-width: 80%;
     margin: 2rem auto;
     text-align: center;
@@ -292,7 +292,7 @@ main {
 }
 
 .final-text {
-    font-family: 'VogueModerne', sans-serif;
+    font-family: 'voguemoderne', sans-serif;
     text-align: justify;
     line-height: 1.6;
     font-size: 1.2rem;
@@ -355,7 +355,7 @@ main {
 
 .tips-text {
     flex: 1;
-    font-family: 'UTDefghio', sans-serif;
+    font-family: 'utdefghio', sans-serif;
     text-align: justify;
     line-height: 1.6;
     font-size: 1.2rem;
@@ -411,7 +411,7 @@ main {
 
 .final-note-text, .final-trust-text {
     flex: 1;
-    font-family: 'UTDefghio', sans-serif;
+    font-family: 'utdefghio', sans-serif;
     text-align: justify;
     line-height: 1.6;
     font-size: 1.2rem;
@@ -449,7 +449,7 @@ footer p {
 }
 
 .gallery-title {
-    font-family: 'VogueModerne', sans-serif;
+    font-family: 'voguemoderne', sans-serif;
     text-align: center;
     color: #f0efe9;
     font-size: 1.8rem;

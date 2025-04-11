@@ -4,17 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 2 | Iryna Turabelidze</title>
-    <link rel="icon" type="image/svg+xml" href="../../logo.svg">
+    <link rel="icon" type="image/svg+xml" href="../../logo.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../../logo.ico">
+    <link rel="apple-touch-icon" href="../../logo.ico">
     <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
         @font-face {
-            font-family: 'VogueModerne';
-            src: url('../../fonts/VogueModerne.otf') format('opentype');
+            font-family: 'voguemoderne';
+            src: url('../../fonts/voguemoderne.otf') format('opentype');
         }
 
         @font-face {
-            font-family: 'Fontbrut';
-            src: url('../../fonts/Fontbrut.otf') format('opentype');
+            font-family: 'fontbrut';
+            src: url('../../fonts/fontbrut.otf') format('opentype');
         }
 
         body.project-page {
@@ -43,12 +46,12 @@
 
         .project-description {
             flex: 1;
-            font-family: 'VogueModerne', sans-serif;
+            font-family: 'voguemoderne', sans-serif;
             max-width: 35%;
         }
 
         .project-description p {
-            font-family: 'Fontbrut', sans-serif;
+            font-family: 'fontbrut', sans-serif;
             color: #333333;
             font-size: 1.8rem;
             line-height: 1.4;
@@ -137,7 +140,7 @@
             top: 50%;
             transform: translateY(-50%);
             width: 200px;
-            font-family: 'Fontbrut', sans-serif;
+            font-family: 'fontbrut', sans-serif;
             color: #333333;
             font-size: 1.8rem;
             line-height: 1.4;
@@ -159,7 +162,7 @@
         }
 
         .sketches-title {
-            font-family: 'Fontbrut', sans-serif;
+            font-family: 'fontbrut', sans-serif;
             color: #333333;
             margin-bottom: 1rem;
             font-size: 1.8rem;
@@ -264,7 +267,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            font-family: 'Fontbrut', sans-serif;
+            font-family: 'fontbrut', sans-serif;
             color: #dcc4c4;
             opacity: 0.5;
             font-size: 1.8rem;
@@ -298,7 +301,7 @@
         }
 
         .meditation-text {
-            font-family: 'Fontbrut', sans-serif;
+            font-family: 'fontbrut', sans-serif;
             color: #333333;
             margin: 2rem 0;
             font-size: 1.8rem;
@@ -355,19 +358,22 @@
             background: linear-gradient(to left, white, transparent);
         }
 
+        footer {
+            background-color: white;
+            padding: 1rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: #333333;
+            margin: 0;
+        }
+
         @media (max-width: 768px) {
             .project-page footer {
-                display: none;
+                display: block;
             }
-        }
-
-        /* Специальные стили футера для этой страницы */
-        .project-page footer {
-            background-color: #dcc4c4;
-        }
-
-        .project-page footer p {
-            color: white;
         }
     </style>
 </head>
@@ -466,16 +472,16 @@ A mossy stone, whispering of ancient earth, gives rise to both a gentle water so
     <script src="../../scripts.js"></script>
     <script>
         const fonts = [
-            'Bioned',
-            'CHIDOKUE',
-            'Continens',
-            'Fontbrut',
-            'FunkyStory-Regular',
-            'Gyeora',
-            'LAGHIO',
-            'Popart-Pixel',
-            'UT Defghio Nixav',
-            'VogueModerne'
+            'bioned',
+            'chidokue',
+            'continents',
+            'fontbrut',
+            'funkystory-regular',
+            'gyeora',
+            'laghio',
+            'popart-pixel',
+            'ut defghio nixav',
+            'voguemoderne'
         ];
         
         // Font logic will be ready when you add fortune-text element
@@ -488,7 +494,7 @@ A mossy stone, whispering of ancient earth, gives rise to both a gentle water so
         // Apply VogueModerne to specific content sections
         document.querySelectorAll('.project-content > *:not(.project-title)').forEach(element => {
             if (!element.querySelector('#fortune-text')) {
-                element.style.fontFamily = 'VogueModerne';
+                element.style.fontFamily = 'voguemoderne';
             }
         });
     </script>

@@ -2,7 +2,7 @@
 
 @font-face {
     font-family: 'funkystory-regular';
-    src: url('fonts/FunkyStory-Regular.otf') format('opentype');
+    src: url('fonts/funkystory-regular.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -10,7 +10,7 @@
 
 @font-face {
     font-family: 'bioned';
-    src: url('fonts/Bioned.otf') format('opentype');
+    src: url('fonts/bioned.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -18,7 +18,7 @@
 
 @font-face {
     font-family: 'chidokue';
-    src: url('fonts/CHIDOKUE Trial.otf') format('opentype');
+    src: url('fonts/chidokue trial.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -26,7 +26,7 @@
 
 @font-face {
     font-family: 'continens';
-    src: url('fonts/Continens.otf') format('opentype');
+    src: url('fonts/continens.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -34,7 +34,7 @@
 
 @font-face {
     font-family: 'fontbrut';
-    src: url('fonts/Fontbrut.otf') format('opentype');
+    src: url('fonts/fontbrut.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -42,7 +42,7 @@
 
 @font-face {
     font-family: 'gyeora';
-    src: url('fonts/Gyeora DEMO.otf') format('opentype');
+    src: url('fonts/gyeora demo.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -50,7 +50,7 @@
 
 @font-face {
     font-family: 'laghio';
-    src: url('fonts/LAGHIO KUMI Trial.otf') format('opentype');
+    src: url('fonts/laghio kumi trial.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -58,7 +58,7 @@
 
 @font-face {
     font-family: 'voguemodern';
-    src: url('fonts/VogueModerne.otf') format('opentype');
+    src: url('fonts/voguemoderne.otf') format('opentype');
 }
 
 .logo {

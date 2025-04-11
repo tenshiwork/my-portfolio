@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project 1 | Iryna Turabelidze</title>
-    <link rel="icon" type="image/svg+xml" href="../../logo.svg">
+    <link rel="icon" type="image/svg+xml" href="../../logo.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../../logo.ico">
+    <link rel="apple-touch-icon" href="../../logo.ico">
     <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
         @font-face {
-            font-family: 'VogueModerne';
-            src: url('../../fonts/VogueModerne.otf') format('opentype');
+            font-family: 'voguemoderne';
+            src: url('../../fonts/voguemoderne.otf') format('opentype');
         }
 
         .project-description p,
@@ -18,7 +21,7 @@
         .fragrance-notes,
         .fragrance-description,
         .sketches-title {
-            font-family: 'VogueModerne', sans-serif;
+            font-family: 'voguemoderne', sans-serif;
         }
     </style>
 </head>
@@ -48,7 +51,7 @@
     <main>
         <div class="project-container">
             <div class="project-content">
-                <h2 class="project-title"><span style="font-family: 'VogueModerne'">Try your</span> <span id="fortune-text">fortune</span></h2>
+                <h2 class="project-title"><span style="font-family: 'voguemoderne'">Try your</span> <span id="fortune-text">fortune</span></h2>
                 
                 <div class="project-image-wrapper">
                     <img src="project-img.png" alt="Project 1" class="centered-project-image">
@@ -120,16 +123,16 @@
     <script src="../../scripts.js"></script>
     <script>
         const fonts = [
-            'Bioned',
-            'CHIDOKUE',
-            'Continens',
-            'Fontbrut',
-            'FunkyStory-Regular',
-            'Gyeora',
-            'LAGHIO',
-            'Popart-Pixel',
-            'UT Defghio Nixav',
-            'VogueModerne'
+            'bioned',
+            'chidokue',
+            'continents',
+            'fontbrut',
+            'funkystory-regular',
+            'gyeora',
+            'laghio',
+            'popart-pixel',
+            'ut defghio nixav',
+            'voguemoderne'
         ];
         
         const fortuneText = document.getElementById('fortune-text');
@@ -139,7 +142,7 @@
         // Apply VogueModerne to specific content sections
         document.querySelectorAll('.project-content > *:not(.project-title)').forEach(element => {
             if (!element.querySelector('#fortune-text')) {
-                element.style.fontFamily = 'VogueModerne';
+                element.style.fontFamily = 'voguemoderne';
             }
         });
     </script>
