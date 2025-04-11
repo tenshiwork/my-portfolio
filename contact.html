@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Iryna Turabelidze</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @font-face {
+            font-family: 'fontbrut';
+            src: url('fonts/Fontbrut.otf') format('opentype');
+        }
+        body {
+            background-color: #ffffff;
+        }
+        .behance-button {
+            filter: none !important;
+            background-color: #0057ff;
+        }
+        main {
+            position: relative;
+            min-height: calc(100vh - 200px);
+            box-shadow: 0 0 30px rgba(0, 89, 255, 0.2),
+                       inset 0 0 60px rgba(0, 89, 255, 0.3);
+            margin: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .ornament {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: -30px;
+            opacity: 0.9;
+        }
+        .ornament-bottom {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 300px;
+            z-index: 1;
+        }
+        .ornament-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 250px;
+            z-index: 1;
+        }
+        .ornament-left {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 250px;
+            z-index: 1;
+        }
+        .ornament-bottom-center {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            z-index: 1;
+        }
+        .ornament-bottom-right {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 250px;
+            z-index: 1;
+        }
+        .profile-photo {
+            width: 500px;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .behance-button {
+            padding: 15px 30px;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            align-self: center;
+            margin: 30px auto 0;
+        }
+        .behance-button:hover {
+            background-color: #003ecb;
+        }
+        .contact-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            justify-content: center;
+        }
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .contact-name {
+            font-size: 120px;
+            font-family: 'fontbrut', sans-serif;
+            font-weight: normal;
+            color: rgba(9, 53, 143, 0.722);
+            line-height: 0.9;
+            text-align: center;
+        }
+        .contact-email {
+            font-size: 24px;
+            font-family: 'fontbrut', sans-serif;
+            color: rgba(9, 53, 143, 0.6);
+            margin: 15px 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Iryna Turabelidze</div>
+        <nav class="desktop-nav">
+            <ul class="left-nav">
+                <li><a href="index.html">Gallery</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <ul class="right-nav">
+                <li><a href="memes.html">(╯3╰)</a></li>
+            </ul>
+        </nav>
+    </header>
+    <nav class="mobile-nav">
+        <ul>
+            <li><a href="index.html">Gallery</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="memes.html">(╯3╰)</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <img src="contact-page-assets/orn3.png" alt="Ornament" class="ornament">
+        <div class="contact-container">
+            <img src="images/photo.png" alt="Profile Photo" class="profile-photo">
+            <div class="contact-info">
+                <div class="contact-name">IRYNA TURABELIDZE</div>
+                <div class="contact-email">Email: irkatura@gmail.com</div>
+                <a href="https://www.behance.net/tenshiwhisper/projects" class="behance-button" target="_blank">Behance</a>
+            </div>
+        </div>
+        <img src="contact-page-assets/orn1.png" alt="Left Ornament" class="ornament-left">
+        <img src="contact-page-assets/orn2.png" alt="Right Ornament" class="ornament-right">
+        <img src="contact-page-assets/orn6.png" alt="Bottom Left Ornament" class="ornament-bottom">
+        <img src="contact-page-assets/orn5.png" alt="Bottom Center Ornament" class="ornament-bottom-center">
+        <img src="contact-page-assets/orn8.png" alt="Bottom Right Ornament" class="ornament-bottom-right">
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Iryna Turabelidze. All rights reserved.</p>
+    </footer>
+    <script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 4 | Iryna Turabelidze</title>
+    <link rel="icon" type="image/svg+xml" href="../../logo.svg">
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        @font-face {
+            font-family: 'compagnon';
+            src: url('../../fonts/Compagnon-Medium.otf') format('opentype');
+        }
+        @font-face {
+            font-family: 'compagnonroman';
+            src: url('../../fonts/Compagnon-Roman.otf') format('opentype');
+        }
+
+        body.project-page {
+            background: linear-gradient(to bottom, #e0e0e0, #f5f5f5 70%);
+        }
+
+        .project-image-container {
+            position: relative;
+            width: 100%;
+            margin: 2rem 0;
+        }
+
+        .project-image-container img {
+            width: 100%;
+            height: auto;
+        }
+
+        .image-overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'compagnon', sans-serif;
+            font-size: clamp(24px, 4vw, 60px); /* Added clamp for min/max font size */
+            color: #d0d0d0;
+            opacity: 0.75;
+            text-align: center;
+            max-width: 80%;
+            text-transform: uppercase;
+            white-space: pre-line;
+        }
+
+        .subtitle-text {
+            font-family: 'compagnon', sans-serif;
+            font-size: 2.5vw;
+            color: #333333;
+            opacity: 0.9;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .description-text {
+            font-family: 'compagnonroman', sans-serif;
+            font-size: 1.2rem;
+            color: #333333;
+            max-width: 800px;
+            margin: 2rem auto;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin: 2rem 0 1rem 0;
+        }
+        
+        .logo-container img {
+            width: 50px;
+            height: auto;
+        }
+
+        .white-background-container {
+            position: relative;
+            background-color: #f5f5f5;
+            padding: 60px;
+            margin: 2rem auto;
+            max-width: 1600px;
+            margin-left: 20px;
+            margin-right: 20px;
+            overflow: hidden;
+        }
+
+        .white-background-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                circle at center,
+                #f5f5f5 50%,
+                rgba(245, 245, 245, 0.9) 70%,
+                rgba(245, 245, 245, 0.8) 100%
+            );
+            pointer-events: none;
+        }
+
+        .image-row {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin: 2rem auto;
+        }
+
+        .image-row:first-child {
+            margin-top: 0;
+        }
+
+        .image-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .image-row img {
+            height: 400px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .section-title {
+            font-family: 'compagnon', sans-serif;
+            font-size: 2rem;
+            color: #333333;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .full-width-image {
+            width: 100%;
+            height: auto;
+            position: relative;
+            z-index: 1;
+            margin-top: 3rem;
+        }
+
+        .parchment-container {
+            position: relative;
+            background: none;
+            padding: 60px;
+            margin: 2rem auto;
+            max-width: 1600px;
+            margin-left: 20px;
+            margin-right: 20px;
+            overflow: hidden;
+        }
+
+        .quote-text {
+            font-family: 'compagnonroman', sans-serif;
+            font-size: 1.4rem;
+            color: #333333;
+            text-align: center;
+            margin: 2rem auto;
+            line-height: 1.6;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .parchment-image {
+            width: 100%;
+            height: auto;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tower-section {
+            position: relative;
+            width: 100%;
+            margin: 3rem 0;
+        }
+
+        .tower-section img {
+            width: 100%;
+            height: auto;
+        }
+
+        .tower-description {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            max-width: 300px;
+            font-family: 'compagnonroman', sans-serif;
+            font-size: 1.2rem;
+            color: #F5E6D3;
+            line-height: 1.6;
+            text-align: right;
+            z-index: 1;
+        }
+
+        .tower-info-section {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 20px;
+        }
+
+        .tower-info-title {
+            font-family: 'compagnon', sans-serif;
+            font-size: 2rem;
+            color: #333333;
+            margin-bottom: 1.5rem;
+        }
+
+        .tower-info-text {
+            font-family: 'compagnonroman', sans-serif;
+            font-size: 1.2rem;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        .tower-images {
+            display: flex;
+            gap: 40px;
+            margin: 3rem auto;
+            max-width: 1600px;
+            padding: 0 20px;
+        }
+
+        .tower-images img {
+            width: calc(50% - 20px);
+            height: auto;
+        }
+
+        .curved-forms-section {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 20px;
+        }
+
+        .curved-forms-images {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .curved-forms-images .full-width {
+            width: 80%;
+            height: auto;
+            margin: 0 auto 40px;
+            display: block;
+        }
+
+        .curved-forms-images .image-pair {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            align-items: center;
+            width: 80%;
+        }
+
+        .curved-forms-images .image-pair img {
+            height: 300px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .explanation-text {
+            font-family: 'compagnonroman', sans-serif;
+            font-size: 1.1rem;
+            color: #D4B996;
+            text-align: center;
+            max-width: 800px;
+            margin: 3rem auto 2rem;
+            line-height: 1.6;
+            padding: 0 20px;
+            font-style: italic;
+        }
+
+        .theme-section {
+            max-width: 800px;
+            margin: 6rem auto 3rem;
+            padding: 0 20px;
+        }
+
+        .theme-title {
+            font-family: 'compagnon', sans-serif;
+            font-size: 2rem;
+            color: #333333;
+            margin-bottom: 1.5rem;
+        }
+
+        .theme-text {
+            font-family: 'compagnonroman', sans-serif;
+            font-size: 1.2rem;
+            color: #333333;
+            line-height: 1.6;
+            margin-bottom: 3rem;
+        }
+
+        .theme-images {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 3rem auto;
+            max-width: 1600px;
+            padding: 0 20px;
+            align-items: flex-start;
+        }
+
+        .theme-images img {
+            height: 350px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .conclusion-text {
+            font-family: 'compagnonroman', sans-serif;
+            font-size: 1.2rem;
+            color: #D4B996;
+            text-align: center;
+            max-width: 800px;
+            margin: 5rem auto;
+            line-height: 1.8;
+            padding: 0 20px;
+            font-style: italic;
+        }
+
+        footer {
+            background-color: #f5f5f5;
+            padding: 1rem;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body class="project-page">
+    <header>
+        <div class="logo">Iryna Turabelidze</div>
+        <nav class="desktop-nav">
+            <ul class="left-nav">
+                <li><a href="../../index.html">Gallery</a></li>
+                <li><a href="../../projects.html">Projects</a></li>
+                <li><a href="../../contact.html">Contact</a></li>
+            </ul>
+            <ul class="right-nav">
+                <li><a href="../../memes.html">(╯3╰)</a></li>
+            </ul>
+        </nav>
+    </header>
+    <nav class="mobile-nav">
+        <ul>
+            <li><a href="../../index.html">Gallery</a></li>
+            <li><a href="../../projects.html">Projects</a></li>
+            <li><a href="../../contact.html">Contact</a></li>
+            <li><a href="../../memes.html">(╯3╰)</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="project-container">
+            <div class="project-content">
+                <div class="project-image-container">
+                    <img src="1.jpg" alt="Crematorium Project">
+                    <div class="image-overlay-text">
+                        Crematorium on the territory 
+                        of the Holoskivske Cemetery 
+                        in Lviv
+                    </div>
+                </div>
+                <div class="logo-container">
+                    <img src="../../logo.svg" alt="Logo">
+                </div>
+                <div class="subtitle-text">
+                    Bachelor's Thesis
+                </div>
+                <div class="description-text">
+                    The project proposes a modern crematorium complex on the territory of Holoskivske Cemetery in Lviv, Ukraine. Designed as a response to growing demand for cremation services and the need for environmentally sustainable burial practices, the complex integrates functional, cultural, and emotional considerations.
+                    <br><br>
+                    Site Analysis and Integration
+                    <br><br>
+                    The site is situated in a green zone near Brykhovyts'kyi Forest, distanced from residential areas to ensure tranquility. Separate routes for funeral processions and visitors ensure dignified movement and privacy.
+                </div>
+                <div class="white-background-container">
+                    <div class="image-row">
+                        <img src="2.png" alt="Project Image 2">
+                        <img src="3.png" alt="Project Image 3">
+                    </div>
+                    <h2 class="section-title">Master plan</h2>
+                    <div class="image-row">
+                        <img src="4.png" alt="Project Image 4">
+                        <img src="5.png" alt="Project Image 5">
+                    </div>
+                    <img src="6.png" alt="Project Image 6" class="full-width-image">
+                </div>
+                <div class="parchment-container">
+                    <div class="quote-text">
+                        But every project begins with an idea, and every idea begins with a sketch...
+                    </div>
+                    <img src="7.png" alt="Project Sketch" class="parchment-image">
+                </div>
+                <div class="tower-section">
+                    <img src="8.jpg" alt="Tower Design">
+                    <div class="tower-description">
+                        The tower houses ventilation systems for the cremation chambers, discreetly integrating technical needs with symbolic form
+                    </div>
+                </div>
+                <div class="tower-info-section">
+                    <h2 class="tower-info-title">Vertical Tower: Transcendence and Landmark</h2>
+                    <p class="tower-info-text">
+                        The 17-meter tower acts as a spiritual and practical beacon, guiding first-time visitors toward the crematorium while symbolizing ascension and the soul's journey beyond physical existence. Its height draws the eye upward, serving as both a navigational marker and a metaphor for transcendence.
+                    </p>
+                </div>
+                <div class="tower-images">
+                    <img src="9.jpg" alt="Tower View 1">
+                    <img src="10.jpg" alt="Tower View 2">
+                </div>
+                <div class="curved-forms-section">
+                    <h2 class="tower-info-title">Curved Forms and Organic Shapes</h2>
+                    <p class="tower-info-text">
+                        Soft, flowing lines in the farewell hall and roof structures evoke natural landscapes, symbolizing the interconnectedness of life and death. Curves contrast with rigid urban geometries, offering a sanctuary from the city's chaos
+                    </p>
+                </div>
+                <div class="curved-forms-images">
+                    <img src="11.png" alt="Curved Forms Full View" class="full-width">
+                    <div class="image-pair">
+                        <img src="12.png" alt="Curved Forms Detail 1">
+                        <img src="13.png" alt="Curved Forms Detail 2">
+                    </div>
+                    <p class="explanation-text">
+                        The absence of sharp angles creates a welcoming, non-threatening atmosphere, reducing the psychological weight of the space
+                    </p>
+                </div>
+                
+                <div class="logo-container">
+                    <img src="../../logo.svg" alt="Logo">
+                </div>
+                <div class="theme-section">
+                    <h2 class="theme-title">Light: Hope, Spirituality, and Connection</h2>
+                    <p class="theme-text">
+                        Light represents hope, transcendence, and the intangible connection between the physical and spiritual realms. The crematorium's design harnesses natural light to counteract the heaviness of mourning
+                    </p>
+                    <div class="theme-images">
+                        <img src="14.jpg" alt="Light Theme 1">
+                        <img src="15.jpg" alt="Light Theme 2">
+                        <img src="16.jpg" alt="Light Theme 3">
+                    </div>
+                    <h2 class="theme-title">Water: Purification, Continuity, and Transition</h2>
+                    <p class="theme-text">
+                        Water is a universal symbol of purification, renewal, and the cyclical nature of life. In the crematorium design, reflective ponds and artificial water bodies serve as metaphors for the transition between life and death. They mirror the sky and surrounding greenery, creating a meditative environment that encourages contemplation and acceptance
+                    </p>
+                </div>
+
+                <div class="conclusion-text">
+                    <p>Conclusion: Architecture as Spiritual Mediator</p>
+                    <br>
+                    <p>The Holoskivskyi Crematorium exemplifies how contemporary architecture can address profound existential questions through thoughtful design. By creating a space that honors both the practical necessities of modern urban infrastructure and the timeless human need for meaningful transition rituals, the project demonstrates architecture's unique capacity to bridge material and spiritual realms.</p>
+                    <br>
+                    <p>This work stands as a testament to design's power to dignify difficult human experiences and create spaces where grief can be transformed into meaningful remembrance. Through its integration of symbolism, nature, and cultural sensitivity, the crematorium offers not just a functional facility but a meaningful vessel for one of life's most profound transitions</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Iryna Turabelidze. All rights reserved.</p>
+    </footer>
+    <script src="../../scripts.js"></script>
+</body>
+</html>

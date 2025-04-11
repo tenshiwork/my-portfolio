@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 2 | Iryna Turabelidze</title>
+    <link rel="icon" type="image/svg+xml" href="../../logo.svg">
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        @font-face {
+            font-family: 'VogueModerne';
+            src: url('../../fonts/VogueModerne.otf') format('opentype');
+        }
+
+        @font-face {
+            font-family: 'Fontbrut';
+            src: url('../../fonts/Fontbrut.otf') format('opentype');
+        }
+
+        body.project-page {
+            background:
+                radial-gradient(#dcc4c4 5px, transparent 5px) 0% 100%,
+                radial-gradient(#dcc4c4 12px, transparent 12px) 50% 50%,
+                radial-gradient(#dcc4c4 20px, transparent 20px) 100% 0%,
+                linear-gradient(to bottom right, #c1c1c1, white);
+            background-size: 
+                100px 100px,
+                150px 150px,
+                200px 200px,
+                100% 100%;
+            background-repeat: repeat, repeat, repeat, no-repeat;
+            background-blend-mode: multiply;
+        }
+
+        .project-showcase {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            margin: 4rem 0;
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .project-description {
+            flex: 1;
+            font-family: 'VogueModerne', sans-serif;
+            max-width: 35%;
+        }
+
+        .project-description p {
+            font-family: 'Fontbrut', sans-serif;
+            color: #333333;
+            font-size: 1.8rem;
+            line-height: 1.4;
+        }
+
+        .project-image {
+            flex: 0.8;
+            max-width: 30%;
+            min-width: 300px;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        @media (min-width: 1200px) {
+            .project-description {
+                max-width: 35%;
+            }
+            
+            .project-image {
+                flex: 3;
+                max-width: 100%;
+                min-width: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .project-showcase {
+                flex-direction: column;
+            }
+
+            .project-description {
+                order: -1;
+                max-width: 100%;
+            }
+
+            .project-image {
+                max-width: 90%;
+                min-width: 280px;
+            }
+        }
+
+        .flower-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 4rem;
+            align-items: flex-end;
+            --s: 10px;
+            padding: var(--s);
+            border: calc(2*var(--s)) solid #0000;
+            outline: 1px solid #000;
+            outline-offset: calc(-1*var(--s));
+            background: conic-gradient(from 90deg at 1px 1px,#0000 25%,#000 0);
+            width: 90%;
+            margin-left: auto;
+            position: relative;
+        }
+
+        .flower-row {
+            display: flex;
+            gap: 0;
+            width: 100%;
+        }
+
+        .flower-row img {
+            width: 50%;
+        }
+
+        .flower-gallery > img {
+            width: 100%;
+            margin-top: 0;
+        }
+
+        /* Убираем любые внешние отступы у изображений внутри галереи */
+        .flower-gallery img {
+            margin: 0;
+            display: block;
+        }
+
+        .flower-gallery-caption {
+            position: absolute;
+            right: -220px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 200px;
+            font-family: 'Fontbrut', sans-serif;
+            color: #333333;
+            font-size: 1.8rem;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 1400px) {
+            .flower-gallery-caption {
+                display: none;
+            }
+        }
+
+        .sketches-section {
+            display: flex;
+            flex-direction: column;
+            margin-top: 4rem;
+            align-items: flex-end;
+            width: 90%;
+            margin-left: auto;
+        }
+
+        .sketches-title {
+            font-family: 'Fontbrut', sans-serif;
+            color: #333333;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            line-height: 1.4;
+        }
+
+        .sketches-row {
+            display: flex;
+            gap: 0;
+            width: 100%;
+        }
+
+        .sketches-row img {
+            width: 50%;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .sketches-row {
+                flex-direction: column;
+            }
+            
+            .sketches-row img {
+                width: 100%;
+            }
+        }
+
+        .flower-row-three {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            margin-left: auto;
+            margin-top: 4rem;
+            align-items: flex-end;
+        }
+
+        .flower-row-top {
+            display: flex;
+            width: 100%;
+            gap: 0;
+            justify-content: flex-end;
+        }
+
+        .flower-row-top img {
+            width: 50%;
+            height: auto;
+        }
+
+        .flower-row-three > img {
+            width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 768px) {
+            .flower-row-three {
+                flex-direction: column;
+            }
+
+            .flower-row-top {
+                flex-direction: column;
+            }
+
+            .flower-row-top img,
+            .flower-row-three > img {
+                width: 100%;
+                height: auto;
+                margin-bottom: 0;
+            }
+        }
+
+        .animation-container {
+            width: 90%;
+            margin-left: auto;
+            margin-top: 4rem;
+            display: flex;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        .animation-container::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at center, rgba(220, 196, 196, 0.3) 0%, transparent 70%);
+            filter: blur(30px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .animation-container img {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        .background-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            font-family: 'Fontbrut', sans-serif;
+            color: #dcc4c4;
+            opacity: 0.5;
+            font-size: 1.8rem;
+            line-height: 1.4;
+            z-index: -2;
+            padding: 2rem;
+            white-space: pre-wrap;
+            text-shadow: 0 0 1px rgba(220, 196, 196, 0.3);
+        }
+
+        .project-content {
+            position: relative;
+        }
+
+        .vertical-text {
+            position: absolute;
+            left: -12rem;
+            top: 50%;
+            transform: translateY(-50%);
+            writing-mode: vertical-rl;
+            color: #dcc4c4;
+            opacity: 0.3;
+            font-size: 6rem;
+            z-index: 1;
+        }
+
+        @media (max-width: 1024px) {
+            .vertical-text {
+                display: none;
+            }
+        }
+
+        .meditation-text {
+            font-family: 'Fontbrut', sans-serif;
+            color: #333333;
+            margin: 2rem 0;
+            font-size: 1.8rem;
+            line-height: 1.4;
+        }
+
+        .sliding-images {
+            width: 90%;
+            margin-left: auto;
+            margin-top: 4rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .sliding-track {
+            display: flex;
+            width: calc(250px * 10); /* 5 images × 2 for loop */
+            animation: slide 20s linear infinite;
+        }
+
+        .sliding-track img {
+            width: 250px;
+            height: auto;
+            margin-right: 20px;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-250px * 5)); /* 5 images */
+            }
+        }
+
+        /* Добавляем плавное затухание по краям */
+        .sliding-images::before,
+        .sliding-images::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 2;
+        }
+
+        .sliding-images::before {
+            left: 0;
+            background: linear-gradient(to right, white, transparent);
+        }
+
+        .sliding-images::after {
+            right: 0;
+            background: linear-gradient(to left, white, transparent);
+        }
+
+        @media (max-width: 768px) {
+            .project-page footer {
+                display: none;
+            }
+        }
+
+        /* Специальные стили футера для этой страницы */
+        .project-page footer {
+            background-color: #dcc4c4;
+        }
+
+        .project-page footer p {
+            color: white;
+        }
+    </style>
+</head>
+<body class="project-page">
+    <header>
+        <div class="logo">Iryna Turabelidze</div>
+        <nav class="desktop-nav">
+            <ul class="left-nav">
+                <li><a href="../../index.html">Gallery</a></li>
+                <li><a href="../../projects.html">Projects</a></li>
+                <li><a href="../../contact.html">Contact</a></li>
+            </ul>
+            <ul class="right-nav">
+                <li><a href="../../memes.html">(╯3╰)</a></li>
+            </ul>
+        </nav>
+    </header>
+    <nav class="mobile-nav">
+        <ul>
+            <li><a href="../../index.html">Gallery</a></li>
+            <li><a href="../../projects.html">Projects</a></li>
+            <li><a href="../../contact.html">Contact</a></li>
+            <li><a href="../../memes.html">(╯3╰)</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="project-container">
+            <div class="project-content">
+                <div class="vertical-text">生け花/活花 いけばな</div>
+                <div class="project-showcase">
+                    <div class="project-description">
+                        <p>3D visualization of modern ikebana that combines the organic forms of succulents with minimalist stone. The project explores the harmony between plant life and stone stillness in digital space</p>
+                    </div>
+                    <div class="project-image">
+                        <img src="project-img.png" alt="Modern Ikebana 3D Visualization">
+                    </div>
+                </div>
+                
+                <div class="flower-gallery">
+                    <div class="flower-row">
+                        <img src="flower1.png" alt="Flower Design 1">
+                        <img src="flower2.png" alt="Flower Design 2">
+                    </div>
+                    <img src="flower3.png" alt="Flower Design 3">
+                    <div class="flower-gallery-caption">Glimpses into a fantastical ecosystem, these designs showcase speculative plant life. With pearlescent sheens, translucent bodies, and soft, glowing colours, they evoke the beauty of alien botany or lifeforms from a dream</div>
+                </div>
+
+                <div class="sketches-section">
+                    <h3 class="sketches-title">some scatches</h3>
+                    <div class="sketches-row">
+                        <img src="scatch1.png" alt="Sketch 1">
+                        <img src="scatch2.png" alt="Sketch 2">
+                    </div>
+                    <p class="meditation-text">This arrangement celebrates nature as the ultimate muse. Imagine a hidden glade where water seeps from moss-covered rock, nurturing fragile beauty. The stone provides anchor, the water lends life, and the flowers reach for light – a quiet testament to nature's artistry</p>
+                </div>
+
+                <div class="sliding-images">
+                    <div class="sliding-track">
+                        <!-- Первый набор -->
+                        <img src="img_2503.png" alt="Slide 1">
+                        <img src="img_2504.png" alt="Slide 2">
+                        <img src="img_2505.png" alt="Slide 3">
+                        <img src="img_2506.png" alt="Slide 4">
+                        <img src="img_2507.png" alt="Slide 5">
+                        <!-- Дублируем для бесшовной анимации -->
+                        <img src="img_2503.png" alt="Slide 1">
+                        <img src="img_2504.png" alt="Slide 2">
+                        <img src="img_2505.png" alt="Slide 3">
+                        <img src="img_2506.png" alt="Slide 4">
+                        <img src="img_2507.png" alt="Slide 5">
+                    </div>
+                </div>
+
+                <div class="flower-row-three">
+                    <div class="flower-row-top">
+                        <img src="flower4.png" alt="Flower Design 4">
+                        <img src="flower5.png" alt="Flower Design 5">
+                    </div>
+                    <img src="flower6.png" alt="Flower Design 6">
+                </div>
+
+                <div class="animation-container">
+                    <div class="background-text">This Ikebana arrangement draws inspiration directly from the earth. A moss-covered stone forms the foundation, mimicking a natural landscape element from which life-giving water gently emerges. Delicate flowers rise from this source, symbolizing growth and beauty sustained by nature itself
+
+A mossy stone, whispering of ancient earth, gives rise to both a gentle water source and delicate blossoms. This Ikebana piece captures the essence of natural creation, where water and life spring forth from the grounded beauty of the wild</div>
+                    <img src="flower-animation.gif" alt="Flower Animation">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Iryna Turabelidze. All rights reserved.</p>
+    </footer>
+    <script src="../../scripts.js"></script>
+    <script>
+        const fonts = [
+            'Bioned',
+            'CHIDOKUE',
+            'Continens',
+            'Fontbrut',
+            'FunkyStory-Regular',
+            'Gyeora',
+            'LAGHIO',
+            'Popart-Pixel',
+            'UT Defghio Nixav',
+            'VogueModerne'
+        ];
+        
+        // Font logic will be ready when you add fortune-text element
+        const fortuneText = document.getElementById('fortune-text');
+        const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
+        if (fortuneText) {
+            fortuneText.style.fontFamily = randomFont;
+        }
+
+        // Apply VogueModerne to specific content sections
+        document.querySelectorAll('.project-content > *:not(.project-title)').forEach(element => {
+            if (!element.querySelector('#fortune-text')) {
+                element.style.fontFamily = 'VogueModerne';
+            }
+        });
+    </script>
+</body>
+</html>

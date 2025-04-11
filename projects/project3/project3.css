@@ -1,0 +1,552 @@
+@font-face {
+    font-family: 'VogueModerne';
+    src: url('../../fonts/VogueModerne.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'UTDefghio';
+    src: url('../../fonts/UT Defghio Nixav Trial.otf') format('opentype');
+}
+
+body {
+    background: linear-gradient(to bottom, 
+        #f0efe9 0%, 
+        #f0efe9 25%, 
+        #f0efe9 30%,
+        #e5e2d5 35%,
+        #d5ceb8 40%,
+        #bfb891 45%,
+        #1e3d59 50%,
+        #4b89dc 70%,
+        #4b89dc 100%
+    );
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    position: relative;
+    width: 100%;
+    z-index: 2;  /* Ensure header stays on top */
+}
+
+main {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2rem 0;
+}
+
+.intro-text {
+    font-family: 'VogueModerne', sans-serif;
+    max-width: 80%;
+    margin: 2rem auto;
+    text-align: center;
+    line-height: 1.6;
+    font-size: 1.2rem;
+    color: #333;
+    padding: 20px;
+}
+
+.image-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: #f6f5ee;
+    position: relative;
+    margin-top: 2rem;
+    margin: 100px 0;  /* Add vertical spacing */
+    z-index: 1;  /* Keep content above background but below header */
+}
+
+.image-container {
+    flex: 1;
+    max-width: 20%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.image-container:not(:nth-child(2))::before {
+    content: "";
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    top: -10%;
+    left: -10%;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    z-index: -1;
+    animation: orbit 10s linear infinite;
+}
+
+.image-container:not(:nth-child(2))::after {
+    content: "";
+    position: absolute;
+    width: 140%;
+    height: 140%;
+    top: -20%;
+    left: -20%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    z-index: -2;
+    animation: orbit 15s linear infinite reverse;
+}
+
+@keyframes orbit {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.image-container img:not([alt="Logo"]) {
+    background: transparent;
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 0;
+    box-shadow: none;
+}
+
+.image-container img[alt="Logo"] {
+    width: 30%;
+    margin: 0 auto;
+    display: block;
+}
+
+.title-with-image {
+    position: relative;
+    display: inline-block;
+}
+
+.text-with-images {
+    position: relative;
+    display: inline-block;
+    margin-top: 10px;  /* Reduced from 120px to decrease gap */
+}
+
+.decorative-image {
+    position: absolute;
+    width: 250px;
+    height: auto;
+    transform: rotate(45deg);
+    left: -280px;  /* Changed from -80px to move image more to the left */
+    top: -120px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.decorative-image-top {
+    position: absolute;
+    width: 250px;
+    height: auto;
+    transform: rotate(45deg);
+    left: 60%;           /* Changed from 50% to move left */
+    margin-left: -125px;
+    top: -150px;         /* Changed from -200px to bring image closer to text */
+    z-index: 1;
+    pointer-events: none;
+}
+
+.decorative-image-right {
+    position: absolute;
+    width: 250px;
+    height: auto;
+    transform: rotate(0deg);
+    right: -320px;
+    top: -70px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.bottom-text {
+    margin-top: 4rem;
+    margin-bottom: 6rem;  /* Increased bottom margin */
+}
+
+.additional-text {
+    margin-top: 2rem;
+    white-space: pre-line;  /* Preserve line breaks in the text */
+}
+
+.materials-text {
+    margin-top: 0;  /* Изменено с 4rem */
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    text-align: justify;
+    position: relative;
+    column-count: 2;  /* Разделяем текст на две колонки */
+    column-gap: 180px; /* Уменьшено с 250px */
+    padding: 2rem 2rem; /* Уменьшено с 2rem 4rem */
+}
+
+.materials-text::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 10%;
+    right: 10%;
+    height: 12px; /* Увеличена толщина */
+    background: repeating-linear-gradient(
+        45deg,
+        #000000,
+        #000000 10px,
+        #4a4a4a 10px,
+        #4a4a4a 20px
+    );
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.centered-image {
+    width: 200px;
+    height: auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    z-index: 1;
+    transition: all 1s ease-in-out;
+}
+
+.centered-image:hover {
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(405deg);
+    }
+}
+
+/* Удаляем предыдущий псевдоэлемент, он больше не нужен */
+.materials-text::before {
+    display: none;
+}
+
+.additional-images {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 2rem 0;
+}
+
+.additional-image {
+    width: 200px;
+    height: auto;
+    transform: rotate(45deg);
+}
+
+.final-section {
+    width: 100%;
+    margin-top: 6rem;
+    padding: 2rem;
+}
+
+.final-content {
+    position: relative;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.final-image {
+    width: 200px;
+    height: auto;
+    transform: none;
+    display: block;
+    margin: 0 auto;
+}
+
+.final-image.left {
+    width: 300px;
+    float: left;
+    shape-outside: circle(50%);
+    margin: 0 40px 20px 0;
+    transform: rotate(45deg);
+}
+
+.final-image.center {
+    width: 200px;
+    margin: 3rem auto;
+    display: block;
+    transform: none;
+}
+
+.final-text {
+    font-family: 'VogueModerne', sans-serif;
+    text-align: justify;
+    line-height: 1.6;
+    font-size: 1.2rem;
+    color: #f0efe9;
+}
+
+.section-logo {
+    width: 100px;
+    margin: 4rem auto 2rem;
+    display: block;
+    position: relative;
+    z-index: 1;
+}
+
+.section-logo::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: -400px;
+    right: -400px;
+    height: 15px; /* Увеличена толщина */
+    background: repeating-linear-gradient(
+        45deg,
+        #000000,
+        #000000 15px,
+        #4a4a4a 15px,
+        #4a4a4a 30px
+    );
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: -1;
+}
+
+.wavy-line {
+    width: 80%;
+    height: 20px;
+    margin: 0.5rem auto; /* Уменьшен отступ с 1rem до 0.5rem */
+    background: 
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,0) 30%, #000 32%, #000 70%),
+        radial-gradient(circle at 50% 100%, rgba(255,255,255,0) 30%, #000 32%, #000 70%);
+    background-size: 20px 40px;
+    background-repeat: repeat-x;
+    background-position: 0 0, 10px 20px;
+    position: relative;
+}
+
+.tips-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 90%;
+    margin: 4rem auto;
+    gap: 2rem;
+}
+
+.tips-image {
+    width: 250px;
+    height: auto;
+}
+
+.tips-text {
+    flex: 1;
+    font-family: 'UTDefghio', sans-serif;
+    text-align: justify;
+    line-height: 1.6;
+    font-size: 1.2rem;
+    color: #f0efe9;
+    max-width: 60%;
+    margin: 0 auto;
+}
+
+.final-note {
+    display: flex;
+    flex-direction: column;
+    max-width: 90%;
+    margin: 2rem auto;
+    gap: 1rem;
+}
+
+.final-note-content, .final-trust {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 0;
+}
+
+.final-note-image, .final-note-image-right, .final-trust-image {
+    width: 250px;
+    height: auto;
+    margin: 0;
+}
+
+.final-note-image-right {
+    width: 350px; /* Увеличено с 300px */
+    height: auto;
+    margin: 0;
+}
+
+.final-trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    margin-bottom: -100px; /* Отрицательный отступ снизу */
+}
+
+.final-trust-image {
+    width: 250px;
+    height: auto;
+    display: block;
+    margin: 0;
+    margin-bottom: -10px; /* Отрицательный отступ снизу */
+}
+
+.final-note-text, .final-trust-text {
+    flex: 1;
+    font-family: 'UTDefghio', sans-serif;
+    text-align: justify;
+    line-height: 1.6;
+    font-size: 1.2rem;
+    color: #f0efe9;
+    margin: 0;
+}
+
+footer {
+    position: relative;
+    width: 100%;
+    z-index: 2;  /* Ensure footer stays on top */
+    background: #4b89dc;  /* Добавлен голубой цвет фона */
+    padding: 1rem 0;      /* Добавлен отступ */
+}
+
+footer p {
+    color: #ffffff;      /* Белый цвет текста для контраста */
+    margin: 0;
+    text-align: center;
+}
+
+.gallery-section {
+    width: 100%;
+    padding: 10px 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    position: relative;
+    margin: -20px 0 0 0;
+    box-shadow: 0 4px 30px rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.gallery-section::before {
+    display: none; /* Удаляем сетку */
+}
+
+.gallery-title {
+    font-family: 'VogueModerne', sans-serif;
+    text-align: center;
+    color: #f0efe9;
+    font-size: 1.8rem;
+    margin: 0 0 10px 0; /* Добавлен отступ снизу */
+    padding: 10px 0; /* Добавлены отступы сверху и снизу */
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(300px, 1fr)); /* Фиксированные 3 колонки */
+    gap: 2px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.gallery-item {
+    aspect-ratio: 1;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.gallery-item:nth-child(6) {
+    grid-column: 2; /* Центральная колонка */
+    justify-self: center;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item img:hover {
+    transform: scale(1.05);
+}
+
+.gallery-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.gallery-modal img {
+    max-width: 90%;
+    max-height: 90vh;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 1rem 0;
+    }
+    
+    .image-row {
+        flex-direction: column;
+        gap: 80px; /* Increased from 40px */
+        margin: 60px 0; /* Increased from 40px */
+        padding: 40px 0; /* Added padding */
+    }
+    
+    .image-container {
+        max-width: 60%;
+        margin-bottom: 40px; /* Increased from 20px */
+    }
+
+    .image-container:nth-child(2) {
+        display: none; /* Hide logo container on mobile */
+    }
+
+    .image-container:not(:nth-child(2))::before,
+    .image-container:not(:nth-child(2))::after {
+        width: 120%;
+        height: 120%;
+    }
+
+    .intro-text {
+        font-size: 1rem;
+        max-width: 90%;
+    }
+
+    .bottom-text {
+        margin-top: 2rem;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
