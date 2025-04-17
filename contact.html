@@ -13,117 +13,131 @@
             font-family: 'fontbrut';
             src: url('fonts/fontbrut.otf') format('opentype');
         }
+        @font-face {
+            font-family: 'ut-defghio';
+            src: url('fonts/ut defghio nixav trial.otf') format('opentype');
+        }
         body {
-            background-color: #ffffff;
+            background-color: #cc1476;  /* Much darker blue */
         }
         .behance-button {
-            filter: none !important;
-            background-color: #0057ff;
+            padding: 15px 30px;
+            color: rgba(9, 53, 143, 0.8);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            align-self: center;
+            margin: 30px auto 0;
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(10px) brightness(1.2) saturate(0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .behance-button:hover {
+            background: rgba(255, 255, 255, 0.55);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
         main {
             position: relative;
-            min-height: calc(100vh - 200px);
-            box-shadow: 0 0 30px rgba(0, 89, 255, 0.2),
-                       inset 0 0 60px rgba(0, 89, 255, 0.3);
-            margin: 20px;
-            padding: 20px;
+            min-height: calc(100vh - 150px);  /* Reduced from 200px */
+            margin: 20px 20px 10px 20px;  /* Reduced bottom margin */
+            padding: 20px 20px 40px 20px;  /* Increased bottom padding */
             border-radius: 8px;
-            background-color: #ffffff;
+            background-color: #c7d5e3c3;  /* Light blue instead of white */
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
         }
-        .ornament {
-            width: 100%;
-            max-width: 500px;
-            margin-bottom: -30px;
-            opacity: 0.9;
-        }
-        .ornament-bottom {
+        .background-ornament {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            width: 300px;
+            top: -30px;
+            right: -50px;
+            transform: none;
+            width: 600px;  /* Reduced from 800px */
             z-index: 1;
+            opacity: 0.7;
         }
-        .ornament-right {
+        .background-ornament-bottom {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 250px;
+            bottom: -30px;
+            left: -30px;
+            width: 600px;
             z-index: 1;
-        }
-        .ornament-left {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 250px;
-            z-index: 1;
-        }
-        .ornament-bottom-center {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 300px;
-            z-index: 1;
-        }
-        .ornament-bottom-right {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            width: 250px;
-            z-index: 1;
-        }
-        .profile-photo {
-            width: 500px;
-            height: 500px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-        .behance-button {
-            padding: 15px 30px;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 18px;
-            transition: background-color 0.3s ease;
-            align-self: center;
-            margin: 30px auto 0;
-        }
-        .behance-button:hover {
-            background-color: #003ecb;
+            opacity: 0.7;
         }
         .contact-container {
             position: relative;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0;
+            z-index: 2;
+            width: min(70vw, 1200px);
+            margin: 40px auto;
+            padding: min(60px, 5vw);
             display: flex;
-            gap: 40px;
+            flex-direction: row;  /* Changed from column */
+            gap: min(40px, 3vw);
+            transition: all 0.3s ease;
+            justify-content: flex-start;
             align-items: center;
-            justify-content: center;
+            background: rgba(255, 255, 255, 0.15) url('contact-page-assets/orn9.png') no-repeat;
+            background-size: cover;
+            background-position: center;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2),
+                        inset 0 0 30px rgba(255, 255, 255, 0.1);
+        }
+        .profile-photo {
+            width: min(500px, 40vw);
+            height: min(500px, 40vw);
+            object-fit: contain;
+            flex-shrink: 0;  /* Prevent photo from shrinking */
         }
         .contact-info {
+            margin-right: 0;
+            margin-top: 0;
+            margin-left: 40px;
+            width: auto;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-end;  /* Align text to right */
+            transition: all 0.3s ease;
         }
         .contact-name {
-            font-size: 120px;
-            font-family: 'fontbrut', sans-serif;
+            font-size: min(50px, 4vw);
+            font-family: 'ut-defghio', sans-serif;
             font-weight: normal;
             color: rgba(9, 53, 143, 0.722);
-            line-height: 0.9;
-            text-align: center;
+            line-height: 1;
+            text-align: right;
+            margin-bottom: 10px;
         }
         .contact-email {
-            font-size: 24px;
-            font-family: 'fontbrut', sans-serif;
+            font-size: min(20px, 1.8vw);
+            font-family: 'ut-defghio', sans-serif;
             color: rgba(9, 53, 143, 0.6);
             margin: 15px 0 5px;
+            text-align: right;
+        }
+        @media (max-width: 1650px) {
+            .contact-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-info {
+                margin-left: 0;
+                margin-top: 20px;
+                align-items: center;
+            }
+
+            .contact-name, .contact-email {
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -151,7 +165,8 @@
     </nav>
 
     <main>
-        <img src="contact-page-assets/orn3.png" alt="Ornament" class="ornament">
+        <img src="contact-page-assets/orn5.png" alt="Background Ornament" class="background-ornament">
+        <img src="contact-page-assets/orn6.png" alt="Bottom Background Ornament" class="background-ornament-bottom">
         <div class="contact-container">
             <img src="images/photo.png" alt="Profile Photo" class="profile-photo">
             <div class="contact-info">
@@ -160,11 +175,6 @@
                 <a href="https://www.behance.net/tenshiwhisper/projects" class="behance-button" target="_blank">Behance</a>
             </div>
         </div>
-        <img src="contact-page-assets/orn1.png" alt="Left Ornament" class="ornament-left">
-        <img src="contact-page-assets/orn2.png" alt="Right Ornament" class="ornament-right">
-        <img src="contact-page-assets/orn6.png" alt="Bottom Left Ornament" class="ornament-bottom">
-        <img src="contact-page-assets/orn5.png" alt="Bottom Center Ornament" class="ornament-bottom-center">
-        <img src="contact-page-assets/orn8.png" alt="Bottom Right Ornament" class="ornament-bottom-right">
     </main>
 
     <footer>
