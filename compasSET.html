@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Модерн Компас - Bluetooth Конфигуратор</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .connected {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .disconnected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .waiting {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background-color: #0069d9;
+        }
+        .map-container {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        #map {
+            height: 300px;
+            width: 100%;
+            background-color: #f1f1f1;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .point {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .log-container {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            height: 150px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        .settings {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .settings label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .settings input, .settings select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .settings-group {
+            flex: 1;
+            min-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Модерн Компас - Bluetooth Конфигуратор</h1>
+        
+        <div id="statusContainer" class="status disconnected">
+            <p id="statusText">Отключено</p>
+        </div>
+        
+        <div>
+            <button id="connectBtn">Подключиться к компасу</button>
+            <button id="disconnectBtn" disabled>Отключиться</button>
+        </div>
+        
+        <div class="settings">
+            <div class="settings-group">
+                <label for="deviceName">Имя устройства (фильтр):</label>
+                <input type="text" id="deviceName" placeholder="Например: ModernCompass" value="ModernCompass">
+            </div>
+            <div class="settings-group">
+                <label for="serviceUUID">UUID сервиса:</label>
+                <input type="text" id="serviceUUID" placeholder="Например: 0000180d-0000-1000-8000-00805f9b34fb" value="0000180d-0000-1000-8000-00805f9b34fb">
+            </div>
+            <div class="settings-group">
+                <label for="characteristicUUID">UUID характеристики:</label>
+                <input type="text" id="characteristicUUID" placeholder="Например: 00002a37-0000-1000-8000-00805f9b34fb" value="00002a37-0000-1000-8000-00805f9b34fb">
+            </div>
+            <div class="settings-group">
+                <label for="compatMode">Режим совместимости:</label>
+                <select id="compatMode">
+                    <option value="strict">Стандартный режим</option>
+                    <option value="permissive">Расширенный режим (любое устройство)</option>
+                </select>
+            </div>
+            <div class="settings-group">
+                <label for="connectionMode">Режим подключения:</label>
+                <select id="connectionMode">
+                    <option value="browser">Через браузер (Web Bluetooth)</option>
+                    <option value="system">Через системный Bluetooth</option>
+                </select>
+            </div>
+            <div id="systemBluetoothInfo" style="display: none;" class="settings-group">
+                <p>Системная информация Bluetooth:</p>
+                <div id="systemDevices"></div>
+            </div>
+        </div>
+        
+        <div class="map-container">
+            <h2>Генерация маршрута</h2>
+            <div id="map"></div>
+            <div>
+                <button id="addPointBtn">Добавить точку</button>
+                <button id="clearMapBtn">Очистить карту</button>
+                <button id="generateRouteBtn">Сгенерировать маршрут</button>
+                <button id="sendToDeviceBtn" disabled>Отправить на устройство</button>
+            </div>
+        </div>
+        
+        <div class="log-container">
+            <h3>Лог операций</h3>
+            <div id="logContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Глобальные переменные
+        let bluetoothDevice;
+        let gattServer;
+        let bluetoothCharacteristic;
+        let routePoints = [];
+        let isMapActive = false;
+        
+        // DOM элементы
+        const connectBtn = document.getElementById('connectBtn');
+        const disconnectBtn = document.getElementById('disconnectBtn');
+        const statusContainer = document.getElementById('statusContainer');
+        const statusText = document.getElementById('statusText');
+        const map = document.getElementById('map');
+        const addPointBtn = document.getElementById('addPointBtn');
+        const clearMapBtn = document.getElementById('clearMapBtn');
+        const generateRouteBtn = document.getElementById('generateRouteBtn');
+        const sendToDeviceBtn = document.getElementById('sendToDeviceBtn');
+        const logContent = document.getElementById('logContent');
+        const deviceNameInput = document.getElementById('deviceName');
+        const serviceUUIDInput = document.getElementById('serviceUUID');
+        const characteristicUUIDInput = document.getElementById('characteristicUUID');
+        const compatModeSelect = document.getElementById('compatMode');
+        const connectionModeSelect = document.getElementById('connectionMode');
+        const systemBluetoothInfo = document.getElementById('systemBluetoothInfo');
+        
+        // Проверка доступности Web Bluetooth API
+        if ('bluetooth' in navigator) {
+            log('Web Bluetooth API доступен');
+        } else {
+            log('ОШИБКА: Web Bluetooth API не поддерживается в этом браузере.', true);
+            statusText.textContent = 'Bluetooth не поддерживается';
+            connectBtn.disabled = true;
+        }
+        
+        // Обработчики событий
+        connectBtn.addEventListener('click', connectToDevice);
+        disconnectBtn.addEventListener('click', disconnectFromDevice);
+        addPointBtn.addEventListener('click', toggleMapActive);
+        clearMapBtn.addEventListener('click', clearMap);
+        generateRouteBtn.addEventListener('click', generateRoute);
+        sendToDeviceBtn.addEventListener('click', sendRouteToDevice);
+        map.addEventListener('click', addPointToMap);
+        connectionModeSelect.addEventListener('change', async function() {
+            if (this.value === 'system') {
+                systemBluetoothInfo.style.display = 'block';
+                await checkSystemBluetooth();
+            } else {
+                systemBluetoothInfo.style.display = 'none';
+            }
+        });
+        
+        // Функция для подключения к устройству
+        async function connectToDevice() {
+            try {
+                if (connectionModeSelect.value === 'system') {
+                    // Use system Bluetooth connection
+                    log('Attempting system Bluetooth connection...');
+                    updateStatus('waiting', 'Connecting via system Bluetooth...');
+                    // This would need actual system integration
+                    return;
+                }
+
+                // Existing Web Bluetooth connection code
+                updateStatus('waiting', 'Поиск устройства...');
+                log('Запрос на подключение к Bluetooth устройству...');
+                
+                let requestOptions;
+                if (compatModeSelect.value === 'permissive') {
+                    requestOptions = {
+                        acceptAllDevices: true,
+                        optionalServices: ['generic_access', 'battery_service', serviceUUIDInput.value]
+                    };
+                    log('Используется расширенный режим совместимости');
+                } else {
+                    const deviceName = deviceNameInput.value.trim();
+                    const filters = deviceName ? [{ name: deviceName }] : [];
+                    requestOptions = {
+                        filters: filters.length > 0 ? filters : undefined,
+                        acceptAllDevices: filters.length === 0,
+                        optionalServices: [serviceUUIDInput.value]
+                    };
+                }
+                
+                bluetoothDevice = await navigator.bluetooth.requestDevice(requestOptions);
+                
+                log(`Устройство выбрано: ${bluetoothDevice.name || 'Безымянное устройство'}`);
+                updateStatus('waiting', 'Подключение...');
+                
+                // Подключение к GATT серверу
+                bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
+                gattServer = await bluetoothDevice.gatt.connect();
+                log('Соединение с GATT сервером установлено');
+                
+                // Получение сервиса
+                const serviceUUID = serviceUUIDInput.value;
+                const service = await gattServer.getPrimaryService(serviceUUID);
+                log(`Сервис найден: ${serviceUUID}`);
+                
+                // Получение характеристики
+                const characteristicUUID = characteristicUUIDInput.value;
+                bluetoothCharacteristic = await service.getCharacteristic(characteristicUUID);
+                log(`Характеристика найдена: ${characteristicUUID}`);
+                
+                // Обновление статуса и кнопок
+                updateStatus('connected', `Подключено к: ${bluetoothDevice.name || 'устройству'}`);
+                connectBtn.disabled = true;
+                disconnectBtn.disabled = false;
+                sendToDeviceBtn.disabled = false;
+                
+            } catch (error) {
+                log(`ОШИБКА при подключении: ${error}`, true);
+                log('Попробуйте использовать "Через системный Bluetooth" если браузер не может обнаружить устройство', true);
+                updateStatus('disconnected', 'Ошибка подключения');
+                disconnectFromDevice();
+            }
+        }
+        
+        // Функция для отключения от устройства
+        function disconnectFromDevice() {
+            if (gattServer && gattServer.connected) {
+                gattServer.disconnect();
+            } else {
+                onDisconnected();
+            }
+        }
+        
+        // Обработчик события отключения
+        function onDisconnected() {
+            log('Устройство отключено');
+            updateStatus('disconnected', 'Отключено');
+            
+            if (bluetoothDevice) {
+                bluetoothDevice.removeEventListener('gattserverdisconnected', onDisconnected);
+            }
+            
+            bluetoothDevice = null;
+            gattServer = null;
+            bluetoothCharacteristic = null;
+            
+            connectBtn.disabled = false;
+            disconnectBtn.disabled = true;
+            sendToDeviceBtn.disabled = true;
+        }
+        
+        // Функция включения/выключения режима добавления точек на карту
+        function toggleMapActive() {
+            isMapActive = !isMapActive;
+            
+            if (isMapActive) {
+                addPointBtn.textContent = 'Отменить добавление';
+                map.style.cursor = 'crosshair';
+                log('Режим добавления точек активирован. Кликните на карту, чтобы добавить точку.');
+            } else {
+                addPointBtn.textContent = 'Добавить точку';
+                map.style.cursor = 'default';
+                log('Режим добавления точек деактивирован.');
+            }
+        }
+        
+        // Функция добавления точки на карту
+        function addPointToMap(event) {
+            if (!isMapActive) return;
+            
+            const rect = map.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            
+            // Добавляем точку в массив (x, y в процентах от размеров карты)
+            const xPercent = (x / map.offsetWidth) * 100;
+            const yPercent = (y / map.offsetHeight) * 100;
+            routePoints.push({ x: xPercent, y: yPercent });
+            
+            // Добавляем маркер на карту
+            const point = document.createElement('div');
+            point.className = 'point';
+            point.style.left = `${xPercent}%`;
+            point.style.top = `${yPercent}%`;
+            point.dataset.index = routePoints.length - 1;
+            map.appendChild(point);
+            
+            log(`Добавлена точка ${routePoints.length}: ${xPercent.toFixed(1)}%, ${yPercent.toFixed(1)}%`);
+        }
+        
+        // Очистка карты
+        function clearMap() {
+            const points = map.querySelectorAll('.point');
+            points.forEach(point => point.remove());
+            routePoints = [];
+            log('Карта очищена');
+        }
+        
+        // Генерация маршрута (в данном случае просто готовим данные)
+        function generateRoute() {
+            if (routePoints.length < 2) {
+                log('Нужно добавить как минимум 2 точки для генерации маршрута', true);
+                return;
+            }
+            
+            log(`Маршрут сгенерирован из ${routePoints.length} точек`);
+            log('Маршрут готов к отправке на устройство');
+        }
+        
+        // Отправка маршрута на устройство
+        async function sendRouteToDevice() {
+            if (!bluetoothCharacteristic) {
+                log('Не подключено к устройству', true);
+                return;
+            }
+            
+            if (routePoints.length < 2) {
+                log('Нужно сгенерировать маршрут перед отправкой', true);
+                return;
+            }
+            
+            try {
+                updateStatus('waiting', 'Отправка данных...');
+                log('Начинаем отправку маршрута на устройство...');
+                
+                // Преобразуем данные маршрута в формат для отправки
+                // Простой формат: количество точек (1 байт) + координаты каждой точки (2 байта на координату)
+                const buffer = new ArrayBuffer(1 + routePoints.length * 4);
+                const dataView = new DataView(buffer);
+                
+                // Записываем количество точек
+                dataView.setUint8(0, routePoints.length);
+                
+                // Записываем координаты каждой точки
+                routePoints.forEach((point, index) => {
+                    // Преобразуем проценты в значения от 0 до 65535
+                    const xValue = Math.floor((point.x / 100) * 65535);
+                    const yValue = Math.floor((point.y / 100) * 65535);
+                    
+                    // Записываем x и y в буфер (по 2 байта на каждое значение)
+                    dataView.setUint16(1 + index * 4, xValue, true); // little-endian
+                    dataView.setUint16(1 + index * 4 + 2, yValue, true); // little-endian
+                });
+                
+                // Отправляем данные по частям (MTU Bluetooth обычно около 20 байт)
+                const chunkSize = 20;
+                for (let i = 0; i < buffer.byteLength; i += chunkSize) {
+                    const chunk = buffer.slice(i, Math.min(i + chunkSize, buffer.byteLength));
+                    await bluetoothCharacteristic.writeValue(chunk);
+                    log(`Отправлен фрагмент данных: ${chunk.byteLength} байт`);
+                }
+                
+                log('Маршрут успешно отправлен на устройство!');
+                updateStatus('connected', `Подключено к: ${bluetoothDevice.name || 'устройству'}`);
+                
+            } catch (error) {
+                log(`ОШИБКА при отправке данных: ${error}`, true);
+                updateStatus('connected', `Подключено к: ${bluetoothDevice.name || 'устройству'}`);
+            }
+        }
+        
+        // Вспомогательная функция для логирования
+        function log(message, isError = false) {
+            const logEntry = document.createElement('div');
+            logEntry.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+            
+            if (isError) {
+                logEntry.style.color = 'red';
+                console.error(message);
+            } else {
+                console.log(message);
+            }
+            
+            logContent.appendChild(logEntry);
+            logContent.scrollTop = logContent.scrollHeight;
+        }
+        
+        // Функция обновления статуса подключения
+        function updateStatus(status, message) {
+            statusContainer.className = `status ${status}`;
+            statusText.textContent = message;
+        }
+
+        // Функция проверки системного Bluetooth
+        async function checkSystemBluetooth() {
+            try {
+                const systemDevices = document.getElementById('systemDevices');
+                systemDevices.innerHTML = 'Checking system Bluetooth...';
+                
+                const devicesList = await getSystemBluetoothDevices();
+                if (devicesList.length > 0) {
+                    systemDevices.innerHTML = devicesList.map(device => 
+                        `<div class="device-item" data-address="${device.address}">
+                            ${device.name} (${device.address})
+                        </div>`
+                    ).join('');
+                } else {
+                    systemDevices.innerHTML = 'No Bluetooth devices found in system';
+                }
+            } catch (error) {
+                log('Error checking system Bluetooth: ' + error, true);
+            }
+        }
+
+        // Mock function to get system Bluetooth devices
+        async function getSystemBluetoothDevices() {
+            return new Promise((resolve) => {
+                const mockDevices = [];
+                if (navigator.platform.includes('Win')) {
+                    mockDevices.push({
+                        name: 'System Detected Compass',
+                        address: '00:11:22:33:44:55'
+                    });
+                }
+                resolve(mockDevices);
+            });
+        }
+    </script>
+</body>
+</html>
