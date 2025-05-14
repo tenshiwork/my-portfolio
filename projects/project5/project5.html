@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 5 | Iryna Turabelidze</title>
+    <link rel="icon" type="image/svg+xml" href="../../logo.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../../logo.ico">
+    <link rel="apple-touch-icon" href="../../logo.ico">
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        @font-face {
+            font-family: 'сompagnon';
+            src: url('../../fonts/сompagnon-medium.otf') format('opentype');
+        }
+        @font-face {
+            font-family: 'compagnonroman';
+            src: url('../../fonts/сompagnon-roman.otf') format('opentype');
+        }
+        @font-face {
+            font-family: 'voguemoderne';
+            src: url('../../fonts/voguemoderne.otf') format('opentype');
+        }
+
+        @property --blink-opacity {
+            syntax: "<number>";
+            inherits: false;
+            initial-value: 1;
+        }
+
+        :root {
+            --stripe-color: #fff;
+            --bg: var(--stripe-color);
+            --maincolor: var(--bg);
+        }
+
+        @keyframes smoothBg {
+            from {
+                background-position: 50% 50%, 50% 50%;
+            }
+            to {
+                background-position: 350% 50%, 350% 50%;
+            }
+        }
+
+        body.project-page {
+            background: var(--bg);
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            place-content: center;
+            place-items: center;            --stripes: repeating-linear-gradient(
+                100deg,
+                var(--stripe-color) 0%,
+                var(--stripe-color) 7%,
+                transparent 10%,
+                transparent 12%,
+                var(--stripe-color) 16%
+            );            --rainbow: repeating-linear-gradient(
+            100deg,
+            rgba(159, 196, 255, 0.15) 10%,
+            rgba(255, 182, 244, 0.15) 15%,
+            rgba(159, 196, 255, 0.15) 20%,
+            rgba(182, 255, 246, 0.15) 25%,
+            rgba(159, 196, 255, 0.15) 30%
+            );
+            background-image: var(--stripes), var(--rainbow);
+            background-size: 300%, 200%;
+            background-position: 50% 50%, 50% 50%;
+
+            filter: blur(15px) invert(100%) opacity(0.3);
+
+            mask-image: radial-gradient(ellipse at 100% 0%, black 40%, transparent 70%);
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: var(--stripes), var(--rainbow);
+            background-size: 200%, 100%;
+            animation: smoothBg 120s linear infinite;
+            background-attachment: fixed;
+            mix-blend-mode: difference;
+        }
+
+        body.project-page {
+            background: #e8e8e8;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .vertical-text {
+            position: absolute;
+            top: 50%;
+            font-family: 'voguemoderne', sans-serif;
+            color: rgba(0, 0, 0, 0.1);
+            font-size: 6rem;
+            z-index: 1;
+        }
+
+        .vertical-text.right {
+            right: -12rem;
+            transform: translateY(-50%);
+            writing-mode: vertical-rl;
+        }
+
+        .vertical-text.left {
+            writing-mode: initial;
+            width: 300px;
+            position: absolute;
+            left: 2rem;
+            top: 40px;
+            transform: none;
+            font-size: 1rem;
+            line-height: 1.8;
+            text-align: right;
+            word-wrap: normal;
+            height: auto;
+        }
+
+        @media (max-width: 1024px) {
+            .vertical-text {
+                display: none;
+            }
+        }
+
+        @media (max-width: 1400px) {
+            .vertical-text.left {
+                position: static;
+                width: 100%;
+                max-width: 600px;
+                text-align: center;
+                margin: 2rem auto;
+            }
+        }
+
+        /* Header glow effect */
+        header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 400px;
+            background: radial-gradient(
+                ellipse at top,
+                rgba(100, 149, 237, 0.2),
+                transparent 80%
+            );
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Footer glow effect */
+        footer::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 400px;
+            background: radial-gradient(
+                ellipse at bottom,
+                rgba(100, 149, 237, 0.2),
+                transparent 80%
+            );
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+        }
+
+        footer {
+            background-color: #f5f5f5;
+            padding: 1rem;
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        .project-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .glass-container {
+            position: relative;
+            z-index: 2;
+            width: min(60vw, 1000px);
+            margin: 80px 40px 40px 400px;
+            padding: min(60px, 5vw);
+            display: flex;
+            flex-direction: column;
+            gap: min(40px, 3vw);
+            transition: all 0.3s ease;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2),
+                        inset 0 0 30px rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 1400px) {
+            .glass-container {
+                margin: 40px auto;
+            }
+        }
+
+        .left-text {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 300px;
+            font-family: 'compagnonroman', sans-serif;
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 1rem;
+            line-height: 1.6;
+            padding: 2rem;
+            z-index: 1;
+            text-align: right;
+        }
+
+        @media (max-width: 1400px) {
+            .left-text {
+                display: none;
+            }
+        }
+
+        .intro-text {
+            width: 300px;
+            font-family: 'voguemoderne', sans-serif;
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: #333333;
+            text-align: right;
+            padding-right: 2rem;
+            position: relative;
+            float: left;
+            margin: 180px 0;
+            margin-right: -100%;
+        }
+
+        @media (max-width: 1400px) {
+            .intro-text {
+                position: static;
+                float: none;
+                width: 100%;
+                max-width: 600px;
+                text-align: center;
+                margin: 2rem auto;
+                padding: 0 1rem;
+            }
+        }
+
+        .project-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .carousel-container {
+            width: 90%;
+            margin-left: auto;
+            margin-top: 4rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel-track {
+            display: flex;
+            width: calc(250px * 6);
+            animation: slide 45s linear infinite;
+        }
+
+        .carousel-track img {
+            width: 250px;
+            height: auto;
+            margin-right: 20px;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-250px * 3));
+            }
+        }
+
+        .carousel-container::before,
+        .carousel-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 2;
+        }
+
+        .carousel-container::before {
+            left: 0;
+            background: linear-gradient(to right, white, transparent);
+        }
+
+        .carousel-container::after {
+            right: 0;
+            background: linear-gradient(to left, white, transparent);
+        }
+
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .flower-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 600px;
+        }
+
+        .flower-gallery > img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            max-height: 400px;
+        }
+
+        .flower-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .flower-row img {
+            width: calc(50% - 10px);
+            height: auto;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            max-height: 300px;
+        }
+
+        .flower-gallery img:hover {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 1024px) {
+            .flower-gallery {
+                width: 90%;
+                max-width: none;
+                gap: 6px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .flower-gallery {
+                width: 100%;
+                gap: 4px;
+            }
+            .flower-row {
+                gap: 4px;
+            }
+            .flower-row img {
+                height: 200px;
+            }
+        }
+
+        .book-frame {
+            width: 90%;
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 3rem;
+            background: #fff;
+            position: relative;
+            transform: perspective(1500px) rotateX(5deg);
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .book-frame:hover {
+            transform: perspective(1500px) rotateX(10deg) rotateY(-5deg) rotateZ(-2deg) translateY(-10px);
+            box-shadow: 
+                20px 20px 30px rgba(0, 0, 0, 0.1),
+                40px 40px 60px rgba(0, 0, 0, 0.05);
+        }
+
+        .book-frame::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: #fff;
+            box-shadow: 
+                1px 1px 1px #ddd,
+                2px 2px 1px #ddd,
+                3px 3px 1px #ddd,
+                4px 4px 1px #ddd,
+                5px 5px 1px #ddd,
+                6px 6px 1px #ddd;
+            transform: translateZ(-5px);
+        }
+
+        .book-frame::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(0,0,0,0.1),
+                rgba(0,0,0,0.03) 15%,
+                transparent 100%
+            );
+            transform-origin: left;
+            transform: rotateY(-15deg);
+        }
+
+        .book-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            transform: translateZ(1px);
+            background: #fff;
+            position: relative;
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .book-frame::before {
+            background-image: 
+                linear-gradient(45deg, transparent 48%, rgba(0,0,0,0.01) 49%, rgba(0,0,0,0.01) 51%, transparent 52%),
+                linear-gradient(-45deg, transparent 48%, rgba(0,0,0,0.01) 49%, rgba(0,0,0,0.01) 51%, transparent 52%);
+            background-size: 8px 8px;
+        }
+
+        @media (max-width: 768px) {
+            .book-frame {
+                width: 95%;
+                padding: 1.5rem;
+                transform: perspective(1500px) rotateX(3deg);
+            }
+            
+            .book-frame.closed {
+                transform: perspective(1500px) rotateX(90deg);
+            }
+        }
+
+        .sketch-container {
+            display: flex;
+            gap: 4rem;
+            align-items: flex-start;
+            margin: 4rem auto;
+            max-width: 1400px;
+        }
+
+        .sketch-text {
+            flex: 1;
+            font-family: 'voguemoderne', sans-serif;
+            color: #333333;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 2rem auto 0;
+            padding: 0 1rem;
+        }
+
+        .sketch-text p {
+            margin: 0;
+        }
+
+        @media (max-width: 1024px) {
+            .sketch-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .sketch-text {
+                padding: 0 2rem;
+            }
+        }
+
+        .glow-effect {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            mix-blend-mode: soft-light;
+            filter: blur(50px);
+        }
+
+        @keyframes fadeInOut {
+            0% { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+            100% { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+        }
+
+        .gallery-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: flex-start;
+            gap: 4rem;
+            margin-top: 2rem;
+            position: relative;
+            padding: 0 2rem;
+            margin-right: 2rem;
+        }
+
+        .gallery-text {
+            font-family: 'voguemoderne', sans-serif;
+            color: #333333;
+            font-size: 1.5rem;
+            line-height: 1.8;
+            width: 350px;
+            flex-shrink: 0;
+            padding-top: 1rem;
+            text-align: right;
+            order: -1;
+            margin-right: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .gallery-container {
+                flex-direction: column;
+                align-items: center;
+                padding: 0;
+                margin-right: 0;
+            }
+            
+            .gallery-text {
+                width: 100%;
+                max-width: 600px;
+                text-align: center;
+                order: 2;
+                margin-top: 2rem;
+                font-size: 1.3rem;
+                margin-right: 0;
+            }
+            
+            .flower-gallery {
+                width: 90%;
+                max-width: none;
+            }
+        }
+
+        .compass-container {
+            margin: 4rem 0 2rem;
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .compass {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            perspective: 1000px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .compass::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(
+                circle at center,
+                rgba(255, 255, 255, 0.8) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            pointer-events: none;
+            z-index: 2;
+            transform: scale(1.5);
+            filter: blur(2px);
+        }
+
+        .compass-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .compass:hover .compass-inner {
+            transform: rotateX(30deg) rotateZ(45deg);
+        }
+
+        .compass-arrow {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            font-family: 'popart-pixel', sans-serif;
+            font-size: 24px;
+            color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+
+        .compass-arrow.north {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .compass-arrow.south {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .compass-arrow.east {
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .compass-arrow.west {
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .compass:hover .compass-arrow {
+            font-family: 'popart-pixel', sans-serif;
+            color: #6495ED;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .compass-center {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #6495ED;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            box-shadow: 0 0 10px rgba(100, 149, 237, 0.5);
+        }
+
+        .compass-needle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform: rotate(-45deg);
+            transition: transform 0.6s ease, opacity 0.3s ease;
+            z-index: 4;
+        }
+
+        .needle-north,
+        .needle-south {
+            position: absolute;
+            left: 50%;
+            width: 4px;
+            height: 40%;
+            background: linear-gradient(to bottom, #6495ED, transparent);
+        }
+
+        .needle-north {
+            bottom: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(to top, #6495ED, #ff6b6b);
+        }
+
+        .needle-south {
+            top: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(to bottom, #6495ED, #4a4a4a);
+        }
+
+        @font-face {
+            font-family: 'popart-pixel';
+            src: url('../../fonts/popart-pixel.otf') format('opentype');
+        }
+
+        .orbital-section {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 4rem;
+            margin: 4rem 2rem 12rem;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .orbital-title {
+            font-family: 'voguemoderne', sans-serif;
+            font-size: 2.2rem;
+            color: #333333;
+            position: absolute;
+            top: -3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: 100%;
+        }
+
+        .orbital-text {
+            font-family: 'voguemoderne', sans-serif;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            width: 350px;
+            text-align: right;
+            margin-right: 4rem;
+            color: #333333;
+        }
+
+        .orbital-container {
+            width: 600px;
+            height: 600px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 4rem;
+        }
+
+        .center-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            animation: orbit-rotation linear infinite;
+        }
+
+        @keyframes orbit-rotation {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .orbit:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            animation-duration: 180s;
+        }
+
+        .orbit:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            animation-duration: 240s;
+        }
+
+        .orbit:nth-child(4) {
+            width: 450px;
+            height: 450px;
+            animation-duration: 300s;
+        }
+
+        .orbit:nth-child(5) {
+            width: 500px;
+            height: 500px;
+            animation-duration: 360s;
+        }
+
+        .orbit:nth-child(6) {
+            width: 550px;
+            height: 550px;
+            animation-duration: 420s;
+        }
+
+        .orbit:nth-child(2) .satellite-image {
+            width: 50px;
+            height: 50px;
+        }
+
+        .satellite-image {
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+            filter: brightness(1);
+        }
+
+        .satellite-image:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+            filter: brightness(1.2);
+            box-shadow: 
+                0 0 20px rgba(100, 149, 237, 0.3),
+                0 0 40px rgba(100, 149, 237, 0.2);
+        }
+
+        .orbit:nth-child(2) .satellite-image { top: 0; left: 50%; }
+        .orbit:nth-child(3) .satellite-image { top: 20%; left: 80%; }
+        .orbit:nth-child(4) .satellite-image { top: 75%; left: 25%; }
+        .orbit:nth-child(5) .satellite-image { top: 80%; left: 80%; }
+        .orbit:nth-child(6) .satellite-image { top: 50%; left: 0; }
+
+        @media (max-width: 1400px) {
+            .orbital-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .orbital-text {
+                order: 2;
+                text-align: center;
+                margin-right: 0;
+            }
+            
+            .orbital-container {
+                transform: scale(0.8);
+                margin-right: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .orbital-container {
+                transform: scale(0.5);
+            }
+            
+            .orbital-text {
+                font-size: 1.1rem;
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+
+        .section-title {
+            font-family: 'voguemoderne', sans-serif;
+            font-size: 2rem;
+            color: #333333;
+            text-align: center;
+            margin: 6rem 0 2rem;
+        }
+
+        .prototype-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 6rem auto;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .prototype-image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            margin: 2rem 0;
+            transition: transform 0.3s ease;
+        }
+
+        .prototype-image:hover {
+            transform: scale(1.02);
+        }
+
+        .loading-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 4rem auto;
+            gap: 0.5rem;
+        }
+
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            background: #6495ED;
+            border-radius: 50%;
+            animation: loadingPulse 1.4s ease-in-out infinite;
+        }
+
+        .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes loadingPulse {
+            0%, 100% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        header .logo {
+            font-family: 'laghio', sans-serif;
+        }
+
+        header nav,
+        .mobile-nav,
+        footer {
+            font-family: 'сompagnon', sans-serif;
+        }
+
+        header nav a,
+        .mobile-nav a {
+            font-family: 'сompagnon', sans-serif;
+        }
+    </style>
+</head>
+<body class="project-page">
+    <section class='wrapper'>
+        <div class='hero'>
+        </div>
+    </section>
+    <header>
+        <div class="logo">Iryna Turabelidze</div>
+        <nav class="desktop-nav">
+            <ul class="left-nav">
+                <li><a href="../../index.html">Gallery</a></li>
+                <li><a href="../../projects.html">Projects</a></li>
+                <li><a href="../../contact.html">Contact</a></li>
+            </ul>
+            <ul class="right-nav">
+                <li><a href="../../memes.html">(╯3╰)</a></li>
+            </ul>
+        </nav>
+    </header>
+    <nav class="mobile-nav">
+        <ul>
+            <li><a href="../../index.html">Gallery</a></li>
+            <li><a href="../../projects.html">Projects</a></li>
+            <li><a href="../../contact.html">Contact</a></li>
+            <li><a href="../../memes.html">(╯3╰)</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="project-container">
+            <p class="intro-text">Face à une société où nos regards sont de plus en plus captifs des écrans, je suis convaincue que la technologie ne doit pas nous isoler davantage, mais peut au contraire nous aider à retrouver une harmonie avec nous-mêmes et notre environnement. La technologie peut être une formidable alliée, si elle est pensée pour enrichir notre expérience sensible du monde, plutôt que de s'y substituer</p>
+            
+            <div class="glass-container">
+                <span class="vertical-text right">TAMAGO</span>
+                <img src="1.jpg" alt="Project Image" class="project-image">
+                <div class="project-content">
+                    <!-- Your project content will go here -->
+                </div>
+            </div>
+
+            <img src="../../logo.svg" alt="Logo" style="display: block; width: 100px; margin: 4rem auto;">
+
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <!-- Первый набор -->
+                    <img src="2.png" alt="Project Image 2">
+                    <img src="3.jpg" alt="Project Image 3">
+                    <img src="4.png" alt="Project Image 4">
+                    <!-- Дублируем для бесшовной анимации -->
+                    <img src="2.png" alt="Project Image 2">
+                    <img src="3.jpg" alt="Project Image 3">
+                    <img src="4.png" alt="Project Image 4">
+                </div>
+            </div>
+            <div class="gallery-container">
+                <div class="gallery-text">
+                    L'idée est de proposer une
+                    alternative à la navigation par
+                    écran. Cet objet ne montrerait pas
+                    de carte, mais guiderait
+                    l'utilisateur vers sa destination
+                    par des signaux plus subtils et
+                    sensoriels – par exemple, des
+                    <div class="compass-container">
+                        <div class="compass">
+                            <div class="compass-inner">
+                                <div class="compass-arrow north">N</div>
+                                <div class="compass-arrow east">E</div>
+                                <div class="compass-arrow south">S</div>
+                                <div class="compass-arrow west">W</div>
+                                <div class="compass-center"></div>
+                                <div class="compass-needle">
+                                    <div class="needle-north"></div>
+                                    <div class="needle-south"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flower-gallery">
+                    <img src="5.jpg" alt="Project Image 5">
+                    <div class="flower-row">
+                        <img src="6.png" alt="Project Image 6">
+                        <img src="7.jpg" alt="Project Image 7">
+                    </div>
+                </div>
+                    variations de lumière colorée ou
+                    des vibrations discrètes
+                </div>
+            </div>
+            <h2 class="section-title">Mes Sketches</h2>
+            <div class="sketch-container">
+                <div class="book-frame">
+                    <img src="scatch.jpg" alt="Project Sketch" />
+                </div>
+                <div class="sketch-text">
+                    <p>
+                        L'objectif profond est d'inviter les gens à relever la tête, à vivre
+                        davantage leur trajet, à être présents à ce qui les entoure. En
+                        suivant ces indications intuitives plutôt qu'un tracé sur un écran,
+                        ils pourraient redécouvrir le plaisir de l'exploration, emprunter
+                        des chemins inattendus, faire des rencontres fortuites et se
+                        reconnecter à leurs sensations et à l'environnement immédiat.
+                        C'est une exploration sur la façon dont un objet technologique
+                        peut, paradoxalement, nous aider à être plus présents et à faire
+                        de chaque déplacement une petite aventure
+                    </p>
+                    <img src="../../logo.svg" alt="Logo" style="display: block; width: 100px; margin: 2rem auto;">
+                </div>
+            </div>
+        </div>
+        <div class="orbital-section">
+            <h2 class="orbital-title">Composants électroniques</h2>
+            <div class="orbital-text">
+                L'idée est simple : on se connecte à l'appareil
+                depuis son téléphone et on configure, via
+                une interface web, où l'on souhaite aller 
+                que ce soit une destination précise ou une
+                zone à explorer. La boussole établit alors un
+                itinéraire. Elle peut aussi proposer elle
+                même un parcours pour vous pousser à
+                découvrir de nouveaux endroits
+            </div>
+            <div class="orbital-container">
+                <img src="8.png" alt="Center Image" class="center-image">
+                <div class="orbit">
+                    <img src="9.png" alt="Satellite Image 1" class="satellite-image">
+                </div>
+                <div class="orbit">
+                    <img src="10.png" alt="Satellite Image 2" class="satellite-image">
+                </div>
+                <div class="orbit">
+                    <img src="11.png" alt="Satellite Image 3" class="satellite-image">
+                </div>
+                <div class="orbit">
+                    <img src="12.png" alt="Satellite Image 4" class="satellite-image">
+                </div>
+                <div class="orbit">
+                    <img src="13.png" alt="Satellite Image 5" class="satellite-image">
+                </div>
+            </div>
+        </div>
+
+        <div class="prototype-section">
+            <h2 class="section-title">Prototypage</h2>
+            <img src="14.jfif" alt="Prototype Image" class="prototype-image">
+            <div class="loading-animation">
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Iryna Turabelidze. All rights reserved.</p>
+    </footer>
+    <script src="../../scripts.js"></script>
+    <script>
+        function createGlow() {
+            const glow = document.createElement('div');
+            glow.className = 'glow-effect';
+            
+            const size = Math.random() * 700 + 400;
+            glow.style.width = size + 'px';
+            glow.style.height = size + 'px';
+            
+            glow.style.left = Math.random() * (window.innerWidth - size) + 'px';
+            glow.style.top = Math.random() * (document.documentElement.scrollHeight - size) + 'px';
+            
+            const hue = Math.random() * 360;
+            const saturation = Math.random() * 30 + 70;
+            const lightness = Math.random() * 20 + 75;
+            const color = `hsla(${hue}, ${saturation}%, ${lightness}%, 0.3)`;
+            glow.style.background = `radial-gradient(circle at center, ${color} 0%, transparent 70%)`;
+            
+            const duration = Math.random() * 5 + 3;
+            glow.style.animation = `fadeInOut ${duration}s ease-in-out`;
+            
+            document.body.appendChild(glow);
+            
+            setTimeout(() => {
+                glow.remove();
+            }, duration * 1000);
+        }
+
+        setInterval(() => {
+            if (document.querySelectorAll('.glow-effect').length < 8) {
+                createGlow();
+            }
+        }, Math.random() * 1000 + 500);
+        
+        for(let i = 0; i < 5; i++) {
+            createGlow();
+        }
+
+        const compass = document.querySelector('.compass');
+        const compassInner = document.querySelector('.compass-inner');
+        let isPixelated = false;
+        compass.addEventListener('click', () => {
+            const arrows = document.querySelectorAll('.compass-arrow');
+            
+            arrows.forEach(arrow => {
+                arrow.style.opacity = '0';
+            });
+            
+            const smile = document.createElement('div');
+            smile.style.cssText = `
+                position: absolute;
+                font-family: 'popart-pixel';
+                font-size: 40px;
+                color: #6495ED;
+                transform: scale(1.2);
+                transition: all 0.3s ease;
+                z-index: 4;
+            `;
+            smile.textContent = '(^‿^)';
+            compassInner.appendChild(smile);
+            compassInner.style.transform = 'rotateX(30deg) rotateZ(45deg)';
+            const needle = compassInner.querySelector('.compass-needle');
+            needle.style.transform = 'rotate(360deg)';
+            
+            setTimeout(() => {
+                smile.style.opacity = '0';
+                setTimeout(() => {
+                    smile.remove();
+                    arrows.forEach(arrow => {
+                        arrow.style.opacity = '1';
+                        arrow.style.fontFamily = 'compagnonroman';
+                        arrow.style.transform = arrow.classList.contains('north') ? 'translateX(-50%)' :
+                                              arrow.classList.contains('south') ? 'translateX(-50%)' :
+                                              'translateY(-50%)';
+                        arrow.style.color = 'rgba(0, 0, 0, 0.6)';
+                    });
+                    compassInner.style.transform = 'none';
+                    needle.style.transform = 'none';
+                }, 300);
+            }, 1000);
+        });
+
+        document.querySelector('.compass').addEventListener('click', function() {
+            const needle = document.querySelector('.compass-needle');
+            needle.style.opacity = '0';
+            
+            setTimeout(() => {
+                needle.style.opacity = '1';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
