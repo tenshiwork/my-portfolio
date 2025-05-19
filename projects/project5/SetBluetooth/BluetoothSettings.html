@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration ModernCompass</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            display: flex;
+            min-height: 100vh;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* macOS style sidebar */
+        .sidebar {
+            width: 240px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .beta-text {
+            font-size: 13px;
+            color: rgba(0, 0, 0, 0.5);
+            font-weight: 500;
+        }
+
+        .sidebar-content {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .bluetooth-section {
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .bluetooth-button {
+            width: 100%;
+            background: #0071e3;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .bluetooth-button:hover {
+            background: #0077ed;
+            transform: scale(1.02);
+        }
+
+        #bluetoothStatus {
+            text-align: center;
+            color: #86868b;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        #bluetoothStatus.connected {
+            color: #00a94f;
+        }
+
+        .waypoint-section {
+            margin-top: 20px;
+        }
+
+        /* Floating chat container */
+        .floating-chat {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-title {
+            font-size: 13px;
+            color: #86868b;
+            font-weight: 500;
+            margin-right: 4px;
+        }
+
+        .chat-container {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            height: 200px;
+            overflow-y: auto;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 13px;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.9);
+            min-width: 200px;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #0071e3;
+        }
+
+        .chat-send {
+            background: #0071e3;
+            color: white;
+            border: none;
+            padding: 8px;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .chat-message {
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 6px;
+            max-width: 85%;
+        }
+
+        .chat-message.user {
+            background: #0071e3;
+            color: white;
+            margin-left: auto;
+        }
+
+        .chat-message.llm {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Button base styles */
+        .button-base {
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .button-primary {
+            background: #0071e3;
+            color: white;
+        }
+
+        .button-primary:hover {
+            background: #0077ed;
+            transform: scale(1.02);
+        }
+
+        .button-secondary {
+            background: rgba(0, 0, 0, 0.1);
+            color: #1d1d1f;
+        }
+
+        .button-secondary:hover {
+            background: rgba(0, 0, 0, 0.15);
+            transform: scale(1.02);
+        }
+
+        /* Welcome overlay */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            visibility: visible;
+            transition: all 0.3s ease;
+        }
+
+        .welcome-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            backdrop-filter: blur(0);
+            -webkit-backdrop-filter: blur(0);
+        }
+
+        .welcome-dialog {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Update existing button classes */
+        .connect-button,
+        .bluetooth-button,
+        .search-button:not(.secondary),
+        .send-button,
+        .chat-send {
+            background: #0071e3;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .connect-button:hover,
+        .bluetooth-button:hover,
+        .search-button:not(.secondary):hover,
+        .send-button:hover,
+        .chat-send:hover {
+            background: #0077ed;
+            transform: scale(1.02);
+        }
+
+        .skip-button,
+        .search-button.secondary {
+            background: rgba(0, 0, 0, 0.1);
+            color: #1d1d1f;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .skip-button:hover,
+        .search-button.secondary:hover {
+            background: rgba(0, 0, 0, 0.15);
+            transform: scale(1.02);
+        }
+
+        /* Main content area */
+        .main-content {
+            margin-left: 240px;
+            flex: 1;
+            padding: 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Map container */
+        #map {
+            width: 100%;
+            height: calc(100vh - 40px);
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .floating-search {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            gap: 8px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.9);
+            min-width: 200px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #0071e3;
+        }
+
+        .search-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .search-button {
+            flex: 1;
+            background: #0071e3;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .search-button:hover {
+            background: #0077ed;
+            transform: scale(1.02);
+        }
+
+        .search-button.secondary {
+            background: rgba(0, 0, 0, 0.1);
+            color: #1d1d1f;
+        }
+
+        .search-button.secondary:hover {
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        /* Welcome overlay */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            visibility: visible;
+            transition: all 0.3s ease;
+        }
+
+        .welcome-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            backdrop-filter: blur(0);
+            -webkit-backdrop-filter: blur(0);
+        }
+
+        .welcome-dialog {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Update existing button classes */
+        .connect-button,
+        .bluetooth-button,
+        .search-button:not(.secondary),
+        .send-button,
+        .chat-send {
+            background: #0071e3;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .connect-button:hover,
+        .bluetooth-button:hover,
+        .search-button:not(.secondary):hover,
+        .send-button:hover,
+        .chat-send:hover {
+            background: #0077ed;
+            transform: scale(1.02);
+        }
+
+        .skip-button,
+        .search-button.secondary {
+            background: rgba(0, 0, 0, 0.1);
+            color: #1d1d1f;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .skip-button:hover,
+        .search-button.secondary:hover {
+            background: rgba(0, 0, 0, 0.15);
+            transform: scale(1.02);
+        }
+
+        /* Main content area */
+        .main-content {
+            margin-left: 240px;
+            flex: 1;
+            padding: 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Floating elements */
+        .floating-search, .floating-chat {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome overlay -->
+    <div id="welcomeOverlay" class="welcome-overlay">
+        <div class="welcome-dialog">
+            <h2>Connectez votre appareil</h2>
+            <div class="welcome-buttons">
+                <button id="welcomeConnectBtn" class="button-base button-primary">Connecter l'appareil</button>
+                <button id="skipBtn" class="button-base button-secondary">Ignorer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="logo.svg" alt="ModernCompass" height="30">
+            <span class="beta-text">TOMAGO settings Beta</span>
+        </div>
+        <div class="sidebar-content">
+            <div class="bluetooth-section">
+                <button id="bluetoothConnectBtn" class="bluetooth-button">
+                    Connecter Bluetooth
+                </button>
+                <div id="bluetoothStatus">Non connecté</div>
+            </div>
+            <div class="waypoint-section">
+                <div class="waypoint-info">Point sélectionné: <span id="selectedWaypointLabel">Aucun</span></div>
+                <button id="sendToDeviceBtn" class="send-button" disabled>
+                    Envoyer au périphérique
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <div class="floating-search">
+            <input type="text" id="addressSearch" class="search-input" placeholder="Rechercher une adresse...">
+            <div class="search-buttons">
+                <button id="searchBtn" class="button-base button-primary">Rechercher</button>
+                <button id="planRouteBtn" class="button-base button-primary">Tracer l'itinéraire</button>
+                <button id="clearRouteBtn" class="button-base button-secondary">Effacer</button>
+            </div>
+        </div>
+        <div id="map"></div>
+    </div>
+
+    <!-- Floating Chat -->
+    <div class="floating-chat">
+        <div class="chat-title">Chatter avec LLM</div>
+        <input type="text" class="chat-input" id="chatInput" placeholder="Votre message...">
+        <button class="chat-send button-base button-primary" id="chatSendBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3Cd2sh0s9Xh8kyX_vfNErkrLfEiZK1Yk&libraries=places&language=fr"></script>
+    <script type="module" src="js/bluetooth.js"></script>
+    <script type="module" src="js/maps.js"></script>
+    <script type="module" src="js/welcome.js"></script>
+    <script type="module" src="js/chat.js"></script>
+</body>
+</html>
